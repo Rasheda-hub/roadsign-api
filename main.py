@@ -343,61 +343,111 @@ async def home():
             function getSignDescription(signClass) {
                 const descriptions = {
                     // Stop signs
-                    'stop': 'You must come to a complete stop here. Check for other vehicles and pedestrians before proceeding.',
-                    'stop sign': 'You must come to a complete stop here. Check for other vehicles and pedestrians before proceeding.',
-                    
-                    // Yield/Give Way
-                    'yield': 'Slow down and be ready to stop. Give the right-of-way to other vehicles and pedestrians.',
-                    'give way': 'Slow down and be ready to stop. Give the right-of-way to other vehicles and pedestrians.',
-                    
-                    // Speed limits
-                    'speed limit': 'This is the maximum speed you can drive on this road. Stay within this limit for your safety.',
-                    'speedlimit': 'This is the maximum speed you can drive on this road. Stay within this limit for your safety.',
-                    
-                    // Entry restrictions
-                    'no entry': 'Do not enter this road or area. Find an alternative route.',
-                    'do not enter': 'You cannot enter here. This is typically used to prevent wrong-way driving.',
-                    
-                    // Directional
-                    'one way': 'Traffic flows in one direction only on this road. Make sure you are going the right way.',
-                    'turn left': 'You must turn left at this location.',
-                    'turn right': 'You must turn right at this location.',
-                    'no left turn': 'You cannot turn left here. Choose another direction.',
-                    'no right turn': 'You cannot turn right here. Choose another direction.',
-                    'u-turn': 'Pay attention to whether U-turns are allowed or prohibited at this location.',
-                    
-                    // Warnings
-                    'pedestrian crossing': 'Watch out! There is a pedestrian crossing ahead. Be ready to stop for people crossing.',
-                    'crosswalk': 'Watch out! There is a pedestrian crossing ahead. Be ready to stop for people crossing.',
-                    'school zone': 'You are near a school. Slow down and watch for children crossing the street.',
-                    'school': 'You are near a school. Slow down and watch for children crossing the street.',
-                    'railroad crossing': 'A railroad crossing is ahead. Look and listen for trains before crossing.',
-                    'construction': 'Road work ahead! Slow down and stay alert for workers and equipment.',
-                    'work zone': 'Road work ahead! Slow down and stay alert for workers and equipment.',
-                    'merge': 'Two lanes are merging into one ahead. Be prepared to let other vehicles merge safely.',
-                    'curve': 'There is a curve in the road ahead. Slow down and stay in your lane.',
-                    'slippery': 'The road may be slippery here, especially when wet. Drive carefully and reduce your speed.',
-                    'bump': 'There is a bump or uneven surface ahead. Slow down to avoid damage to your vehicle.',
-                    'deer crossing': 'Wildlife may cross the road here. Stay alert, especially at dawn and dusk.',
+                    'stop': 'Come to a full stop and check for traffic.',
+                    'stop sign': 'Come to a full stop and check for traffic.',
+                    'stop_sign': 'Come to a full stop and proceed only when safe.',
                     
                     // Parking
-                    'parking': 'You can park here. Check for any time limits or restrictions.',
-                    'no parking': 'You cannot park in this area. Find another parking spot.',
-                    'handicap': 'This parking space is reserved for vehicles with disability permits only.',
+                    'no parking': 'Parking is not allowed in this area.',
+                    
+                    // Turns
+                    'no u-turn': 'U-turns are prohibited here.',
+                    'no left turn': 'Left turns are not permitted at this point.',
+                    'no right turn': 'Right turns are not permitted at this point.',
+                    'turn left': 'You are required to turn left.',
+                    'turn right': 'You are required to turn right.',
+                    'turn left ahead': 'Left turn ahead — slow down and prepare to turn.',
+                    'turn right ahead': 'Right turn ahead — slow down and prepare to turn.',
+                    
+                    // Directional
+                    'one way street': 'Traffic flows only in one direction.',
+                    'one way': 'Traffic flows only in one direction.',
+                    'straight ahead only': 'You may only go straight — no turns allowed.',
+                    'go straight or turn right': 'You may proceed straight or turn right — no left turn allowed.',
+                    'go straight or turn left': 'You may proceed straight or turn left — no right turn allowed.',
+                    
+                    // Yield/Give Way
+                    'yield': 'Slow down and let other vehicles go first.',
+                    'give way': 'Slow down and give priority to other vehicles before proceeding.',
+                    'give way to oncoming': 'Yield to oncoming traffic.',
+                    
+                    // Pedestrian
+                    'pedestrian crossing': 'Slow down and watch for people crossing.',
+                    'children crossing': 'Slow down; children may cross the road here.',
+                    'beware of children': 'Children may be crossing — slow down and stay alert.',
+                    'bicycle crossing': 'Bicycles crossing ahead — slow down and watch.',
+                    
+                    // Speed limits
+                    'speed limit 20 kmph': 'Maximum speed allowed is 20 km/h — drive slowly.',
+                    'speed limit 30 kmph': 'Maximum speed allowed is 30 km/h.',
+                    'speed limit 30 km/h': 'Maximum speed is 30 km/h in this area.',
+                    'speed limit 40 km/h': 'Maximum speed is 40 km/h in this area.',
+                    'speed limit 50 kmph': 'Maximum speed allowed is 50 km/h.',
+                    'speed limit 50 km/h': 'Maximum speed is 50 km/h in this area.',
+                    'speed limit 60 km/h': 'Maximum speed is 60 km/h in this area.',
+                    'speed limit 70 km/h': 'Maximum speed is 70 km/h in this area.',
+                    'speed limit 80 km/h': 'Maximum speed is 80 km/h in this area.',
+                    '50 mph speed limit': 'Maximum speed allowed is 50 mph — do not exceed.',
+                    'end of all speed and passing limits': 'Previous speed and passing limits are lifted — drive responsibly.',
+                    'end of speed limit': 'Previous speed limit ends — adjust accordingly.',
+                    
+                    // Road conditions
+                    'roadworks ahead': 'Construction work ahead — slow down.',
+                    'slippery road': 'Road may be slippery when wet — proceed carefully.',
+                    'slippery road ahead': 'Road may be slippery — reduce speed and avoid sudden turns or brakes.',
+                    'bumpy road': 'Uneven surface ahead — reduce your speed.',
+                    'uneven road': 'Road surface ahead is uneven — reduce speed to avoid bumps.',
+                    
+                    // Entry restrictions
+                    'no entry': 'Do not enter — road is closed or one-way against you.',
+                    'no_over_taking': 'Overtaking other vehicles is prohibited in this area.',
+                    'no overtaking': 'Overtaking is prohibited in this area.',
+                    'overtaking by trucks is prohibited': 'Trucks are not allowed to overtake here.',
                     
                     // Traffic control
-                    'roundabout': 'A circular intersection is ahead. Yield to traffic already in the roundabout.',
-                    'traffic light': 'Traffic signals are ahead. Be prepared to stop if the light is red or yellow.',
-                    'signal ahead': 'Traffic signals are ahead. Be prepared to stop if the light is red or yellow.',
+                    'roundabout': 'Approaching roundabout — yield and follow flow.',
+                    'round-about': 'Roundabout ahead — yield and follow circular flow of traffic.',
+                    'traffic light ahead': 'Traffic signal ahead — be ready to stop.',
+                    'traffic_signal': 'Traffic lights ahead — be prepared to stop or slow down.',
                     
-                    // Lanes
-                    'bike lane': 'This lane is reserved for bicycles. Do not drive or park in this lane.',
-                    'bus lane': 'This lane is reserved for buses. Do not drive in this lane unless permitted.',
+                    // Keep direction
+                    'keep left': 'Stay on the left side of the road.',
+                    'keep-left': 'Stay on the left side of the road or obstacle.',
+                    'keep right': 'Stay on the right side of the road.',
+                    'keep-right': 'Stay on the right side of the road or obstacle.',
                     
-                    // Services
-                    'hospital': 'A hospital or medical facility is nearby.',
-                    'gas station': 'A gas station is nearby if you need fuel.',
-                    'rest area': 'A rest area is ahead. Take a break if you need to rest.',
+                    // Road features
+                    'road narrows': 'Road ahead becomes narrower — drive cautiously.',
+                    'road narrows on right': 'Right side of the road becomes narrower — slow down and keep left.',
+                    'two-way traffic ahead': 'Be aware that traffic moves in both directions.',
+                    'bridge ahead': 'Bridge ahead — check speed and load restrictions.',
+                    'tunnel ahead': 'Tunnel coming up — turn on lights if needed.',
+                    
+                    // Warnings
+                    'stop sign ahead': 'Prepare to stop ahead.',
+                    'attention please-': 'Pay attention — potential danger or special instructions ahead.',
+                    'dangerous left curve ahead': 'Sharp left curve ahead — reduce speed and navigate carefully.',
+                    'dangerous rright curve ahead': 'Sharp right curve ahead — reduce speed and navigate carefully.',
+                    'left zig zag traffic': 'Road curves left and right ahead — reduce speed and stay alert.',
+                    
+                    // Restrictions
+                    'no trucks': 'Trucks are prohibited beyond this point.',
+                    'truck traffic is prohibited': 'Trucks are not allowed beyond this point.',
+                    
+                    // Crossings
+                    'animal crossing': 'Animals may cross the road — stay alert.',
+                    'railway crossing': 'Railroad tracks ahead — proceed with caution.',
+                    'falling rocks': 'Possible falling rocks — drive carefully.',
+                    
+                    // Zones
+                    'school zone': 'Slow down — children may be nearby.',
+                    'no horns': 'No use of horns in this area.',
+                    'pedestrian zone': 'Pedestrians only — vehicles must stop or park.',
+                    'bus stop': 'Bus stop ahead — watch for buses pulling out.',
+                    'speed camera ahead': 'Speed check zone ahead — keep within limits.',
+                    
+                    // Cycle routes
+                    'cycle route ahead warning': 'Cyclists may be on the road — share the road and slow down.',
                 };
                 
                 // Try exact match first (case-insensitive)
